@@ -10,10 +10,9 @@ import {
 import React, { useState } from "react";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TextInput } from "react-native-gesture-handler";
 import colors from "../config/colors";
-import MyStyles from "../config/MyStyles";
 import PickerItem from "./PickerItem";
+import Screen from "./Screen";
 
 export default function MyPicker({
   icon,
@@ -36,9 +35,11 @@ export default function MyPicker({
               style={styles.icon}
             />
           )}
-          <Text style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </Text>
+          {selectedItem ? (
+            <Text style={styles.text}>{selectedItem.label}</Text>
+          ) : (
+            <Text style={styles.placeholder}>{placeholder}</Text>
+          )}
           {icon && (
             <MaterialCommunityIcons
               name="chevron-down"
@@ -84,5 +85,9 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
+  },
+  placeholder: {
+    flex: 1,
+    color: colors.grey,
   },
 });

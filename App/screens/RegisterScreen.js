@@ -8,17 +8,22 @@ import { AppForm, AppFormField, SubmitButton } from "../components/Forms";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  passoword: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(4).label("Password"),
+  confirmPassword: Yup.string().required().min(4).label("Password"),
 });
 
-const LoginScreen = () => {
+export default function RegisterScreen() {
   return (
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require("../assets/logo-red.png")} />
 
       <AppForm
-        initialValues={{ email: "", passoword: "" }}
-        onSubmit={(values) => console.log(values)}
+        initialValues={{ email: "", password: "", confirmPassword: "" }}
+        onSubmit={(values) => {
+          if (values.password === values.confirmPassword)
+            console.log("Registered!");
+          else console.log("Passwords don't match!");
+        }}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -30,21 +35,28 @@ const LoginScreen = () => {
           textContentType="emailAddress"
         />
         <AppFormField
-          name="passoword"
+          name="password"
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
-          placeholder="Passoword"
+          placeholder="Password"
           textContentType="password"
           secureTextEntry
         />
-        <SubmitButton title="Login" />
+        <AppFormField
+          name="confirmPassword"
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          placeholder="Confirm Password"
+          textContentType="password"
+          secureTextEntry
+        />
+        <SubmitButton title="Register" />
       </AppForm>
     </Screen>
   );
-};
-
-export default LoginScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
